@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %} {% trans "Login" %}{% endblock %}
+
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'core:login' %}{% if next %}?next={{next}}{% endif %}"
+      method="post"
+      class="form-horizontal">
+    {% trans 'Login' as submit_text %}
+    {% render_form_fields form submit_text %}
+</form>
+{% endblock %}
+
+
+{% block sidebar %}
+
+{% endblock %}
