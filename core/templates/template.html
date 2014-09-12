@@ -35,36 +35,10 @@
 
     {% block header %}{% endblock %}
 
-    <script>
-    $(document).ready(function() {
-
-        if (typeof custom_page_init != "undefined")
-        {
-            custom_page_init();
-        }
-
-
-        // Init the modal dialog for editing forms
-        form_modal_dialog();
-
-        // Initialise the hook to reload the main-content
-        load_maincontent();
-
-        // Toggle weight chart tables
-        toggle_weight_log_table();
-
-        $('input[type="date"]').datepicker({
-                                            autoclose: true,
-                                            language: $('html').attr('lang')
-                                        });
-     });
-    </script>
-
-
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<header>
+<header style="padding-top: 2em;">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">

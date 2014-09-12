@@ -107,7 +107,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # PK15 app
-    'core'
+    'core',
+    'oracle'
 )
 
 # A sample logging configuration. The only tangible logging

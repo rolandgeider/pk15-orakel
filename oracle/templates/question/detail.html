@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Frage {{question.pk}}{% endblock %}
+
+
+{% block content %}
+<pre>
+    {{question.question}}
+</pre>
+
+{% if perms.oracle.add_question %}
+    <h4>Antworten</h4>
+    {% for answer in question.answer_set.all %}
+    {% empty %}
+        <em>Die Frage hat keine Antworten</em>
+    {% endfor %}
+{% endif %}
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.oracle.add_question %}
+<h4>Optionen</h4>
+<p><a href="{% url 'oracle:question-delete' question.id %}">Löschen</a></p>
+<p><a href="{% url 'oracle:question-edit' question.id %}">Bearbeiten</a></p>
+{% endif %}
+{% endblock %}
