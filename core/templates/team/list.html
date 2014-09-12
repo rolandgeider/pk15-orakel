@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Teamübersicht{% endblock %}
+
+
+{% block content %}
+
+<table class="table">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Aktionen</th>
+</tr>
+</thead>
+<tbody>
+{% for team in team_list %}
+<tr>
+    <td>{{team.name}}</td>
+    <td class="no-hover">
+        <a href="{% url 'core:team-delete' team.id %}">Löschen</a>
+        <a href="{% url 'core:team-edit' team.id %}">Bearbeiten</a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="2">Keine Teams gefunden</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.core.add_team %}
+<h4>Optionen</h4>
+<p>
+       <a href="{% url 'core:team-add' %}">Team hinzufügen</a>
+</p>
+{% endif %}
+{% endblock %}
