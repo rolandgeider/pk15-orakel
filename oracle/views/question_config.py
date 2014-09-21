@@ -68,12 +68,12 @@ class QuestionConfigAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
         '''
         Create answer configs for each answer the question has
         '''
-        object = form.save()
+        question_config = form.save()
 
         for answer in form.instance.question.answer_set.all():
             answer_config = AnswerConfig()
             answer_config.answer = answer
-            answer_config.question_config = object
+            answer_config.question_config = question_config
             answer_config.save()
 
         return super(QuestionConfigAddView, self).form_valid(form)

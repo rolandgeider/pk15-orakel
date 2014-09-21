@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <th>Frage</th>
-        <td>{{questionconfig.question}}</td>
+        <td>{{questionconfig.question.question}}</td>
     </tr>
     <tr>
         <th>Koordinate</th>
@@ -39,7 +39,7 @@
                 <a href="{% url 'oracle:answer-config-edit' answer_config.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             </td>
             <td>
-                {{answer_config.answer}}
+                {{answer_config.answer.answer}}
             </td>
             <td>
                 {% if not answer_config.next_coordinate %}

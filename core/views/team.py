@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
+from django.contrib.auth.models import User
+
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext as _
@@ -26,16 +28,25 @@ from utils.generic_views import WgerFormMixin
 from utils.generic_views import WgerDeleteMixin
 from utils.generic_views import WgerPermissionMixin
 
-from core.models import Team
+from core.models import Team, UserProfile
+from utils.password import password_generator
 
 
 class TeamListView(WgerPermissionMixin, ListView):
     '''
-    Overview of all available licenses
+    Overview of all available teams
     '''
     model = Team
     permission_required = 'core.add_team'
     template_name = 'team/list.html'
+
+    def get_context_data(self, **kwargs):
+        '''
+        Send some additional data to the template
+        '''
+        context = super(TeamListView, self).get_context_data(**kwargs)
+        context['new_user'] = self.request.session.get('new_user')
+        return context
 
 
 class TeamAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
@@ -48,6 +59,24 @@ class TeamAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
     title = u'Team hinzufügen'
     form_action = reverse_lazy('core:team-add')
     permission_required = 'core.add_team'
+
+    def form_valid(self, form):
+        '''
+        Creates a new user
+        '''
+        team = form.save()
+
+        username = form.instance.name.lower().replace(' ', '')
+        password = password_generator(8)
+        user = User.objects.create_user(username=username, password=password)
+
+        profile = UserProfile()
+        profile.team = team
+        profile.user = user
+        profile.save()
+
+        self.request.session['new_user'] = {'username': username, 'password': password}
+        return super(TeamAddView, self).form_valid(form)
 
 
 class TeamUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):

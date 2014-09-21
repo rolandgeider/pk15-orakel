@@ -88,7 +88,7 @@ class Question(models.Model):
         return None
 
     def __unicode__(self):
-        return u"#{0} - {1}".format(self.pk, self.question[:15])
+        return u"#{0} - {1}".format(self.pk, self.question[:25])
 
 
 class Answer(models.Model):
@@ -184,4 +184,4 @@ class AnswerConfig(models.Model):
         return None
 
     def __unicode__(self):
-        return "#{0}".format(self.pk)
+        return "#{0} - {1}".format(self.pk, self.answer)

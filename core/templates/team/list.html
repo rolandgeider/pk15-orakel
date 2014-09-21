@@ -30,7 +30,6 @@
 </tr>
 {% endfor %}
 </tbody>
-
 </table>
 {% endblock %}
 
@@ -38,10 +37,23 @@
 
 
 {% block sidebar %}
+{% if new_user %}
+<div class="well">
+    <h4>Neuer Benutzer</h4>
+    <ul>
+
+        <li><strong>Benutzername: </strong> {{new_user.username}}</li>
+        <li><strong>Passwort: </strong> {{new_user.password}}</li>
+    </ul>
+</div>
+{% endif %}
+
+
 {% if perms.core.add_team %}
 <h4>Optionen</h4>
 <p>
-       <a href="{% url 'core:team-add' %}">Team hinzufügen</a>
+<a href="{% url 'core:team-add' %}">Team hinzufügen</a>
 </p>
 {% endif %}
+
 {% endblock %}

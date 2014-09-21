@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load wger_extras %}
 
-{% block title %}Teamfrageübersicht{% endblock %}
+{% block title %}Teamfragenübersicht{% endblock %}
 
 
 {% block content %}
@@ -22,7 +22,7 @@
 {% for config in questionconfig_list %}
     {% ifchanged config.team %}
     <tr>
-        <th colspan="3">
+        <th colspan="3" class="active">
             {{config.team}}
         </th>
     </tr>
