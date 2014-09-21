@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Koordinate {{coordinate.pk}}{% endblock %}
+
+
+{% block content %}
+<table class="table">
+    <tr>
+        <th>Beschreibung</th>
+        <td>{{coordinate.description}}</td>
+    </tr>
+    <tr>
+        <th>Lat</th>
+        <td>{{coordinate.lat}}</td>
+    </tr>
+    <tr>
+        <th>Lon</th>
+        <td>{{coordinate.lon}}</td>
+    </tr>
+</table>
+
+
+
+{% if perms.oracle.add_coordinate %}
+    {# TODO: Fragen und antworten hier? #}
+{% endif %}
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.oracle.add_question %}
+<h4>Optionen</h4>
+<p><a href="{% url 'oracle:coordinate-delete' coordinate.id %}">Löschen</a></p>
+<p><a href="{% url 'oracle:coordinate-edit' coordinate.id %}">Bearbeiten</a></p>
+{% endif %}
+{% endblock %}

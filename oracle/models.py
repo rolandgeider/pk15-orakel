@@ -30,7 +30,7 @@ class Log(models.Model):
     '''
 
     lat = models.FloatField()
-    long = models.FloatField()
+    lon = models.FloatField()
 
     def get_owner_object(self):
         '''
@@ -40,6 +40,26 @@ class Log(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Coordinate(models.Model):
+    '''
+    A geographical point, used for questions
+    '''
+    description = models.CharField(verbose_name=u'Beschreibung',
+                                   help_text=u'Wird nur im Admininterface verwendet',
+                                   max_length=30)
+    lat = models.FloatField()
+    lon = models.FloatField()
+
+    def get_owner_object(self):
+        '''
+        Needed for generic views, not used
+        '''
+        return None
+
+    def __unicode__(self):
+        return self.description
 
 
 class Question(models.Model):
