@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load wger_extras %}
 
-{% block title %}Koordinate {{coordinate.pk}}{% endblock %}
+{% block title %}Koordinate #{{coordinate.pk}}{% endblock %}
 
 
 {% block content %}
@@ -22,7 +22,7 @@
     </tr>
 </table>
 
-
+<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=8.039020299911499,52.27388885073032,8.048644065856934,52.278549642981815&amp;layer=mapnik&amp;marker={{coordinate.lat|stringformat:'f'}},{{coordinate.lon|stringformat:'f'}}" style="border: 1px solid black"></iframe>
 
 {% if perms.oracle.add_coordinate %}
     {# TODO: Fragen und antworten hier? #}
@@ -37,5 +37,7 @@
 <h4>Optionen</h4>
 <p><a href="{% url 'oracle:coordinate-delete' coordinate.id %}">Löschen</a></p>
 <p><a href="{% url 'oracle:coordinate-edit' coordinate.id %}">Bearbeiten</a></p>
+<p><a href="http://www.openstreetmap.org/?mlat={{coordinate.lat|stringformat:'f'}}&amp;mlon={{coordinate.lon|stringformat:'f'}}#map=16/{{coordinate.lat|stringformat:'f'}}/{{coordinate.lon|stringformat:'f'}}">Auf Karte anzeigen</a></p>
+
 {% endif %}
 {% endblock %}
