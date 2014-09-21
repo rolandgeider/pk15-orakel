@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Teamfrage {{questionconfig.pk}}{% endblock %}
+
+
+{% block content %}
+<table class="table">
+    <tr>
+        <th>Team</th>
+        <td>{{questionconfig.team}}</td>
+    </tr>
+    <tr>
+        <th>Frage</th>
+        <td>{{questionconfig.question}}</td>
+    </tr>
+    <tr>
+        <th>Koordinate</th>
+        <td>{{questionconfig.coordinate}}</td>
+    </tr>
+</table>
+{% osm_coordinate questionconfig.coordinate.lat questionconfig.coordinate.lon %}
+
+
+
+{% if perms.oracle.add_question %}
+    <h4>Antworten</h4>
+    <table class="table">
+    <tr>
+        <th></th>
+        <th>Antwort</th>
+        <th>Nächste Koordinaten</th>
+    </tr>
+    {% for answer_config in questionconfig.answerconfig_set.all %}
+        <tr>
+            <td>
+                <a href="{% url 'oracle:answer-config-edit' answer_config.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            </td>
+            <td>
+                {{answer_config.answer}}
+            </td>
+            <td>
+                {% if not answer_config.next_coordinate %}
+                    <span class="label label-danger">keine Koordinaten!</span>
+                {% else %}
+                    {{answer_config.next_coordinate}}
+                {% endif %}
+
+                {% if answer_config.is_wrong %}
+                    <span class="label label-warning">falsche Antwort</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.oracle.add_question %}
+<h4>Optionen</h4>
+<p><a href="{% url 'oracle:question-config-delete' questionconfig.id %}">Löschen</a></p>
+<p><a href="{% url 'oracle:question-config-edit' questionconfig.id %}">Bearbeiten</a></p>
+
+{% endif %}
+{% endblock %}

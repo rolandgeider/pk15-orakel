@@ -18,7 +18,9 @@
 from django.conf.urls import patterns, url
 
 from oracle.views import question
+from oracle.views import question_config
 from oracle.views import answer
+from oracle.views import answer_config
 from oracle.views import coordinate
 from oracle.views import misc
 
@@ -29,6 +31,24 @@ urlpatterns = patterns('',
     url(r'^dashboard$',
         misc.dashboard,
         name='dashboard'),
+
+    
+    # Coordinates
+    url(r'^koordinate/liste$',
+        coordinate.CoordinateListView.as_view(),
+        name='coordinate-list'),
+    url(r'^koordinate/hinzufuegen',
+        coordinate.CoordinateAddView.as_view(),
+        name='coordinate-add'),
+    url(r'^koordinate/(?P<pk>\d+)/bearbeiten',
+        coordinate.CoordinateUpdateView.as_view(),
+        name='coordinate-edit'),
+    url(r'^koordinate/(?P<pk>\d+)/anzeigen',
+        coordinate.CoordinateDeatilView.as_view(),
+        name='coordinate-detail'),
+    url(r'^koordinate/(?P<pk>\d+)/loeschen',
+        coordinate.CoordinateDeleteView.as_view(),
+        name='coordinate-delete'),
 
     # Questions
     url(r'^frage/liste$',
@@ -58,20 +78,27 @@ urlpatterns = patterns('',
         answer.AnswerDeleteView.as_view(),
         name='answer-delete'),
 
-    # Coordinates
-    url(r'^koordinate/liste$',
-        coordinate.CoordinateListView.as_view(),
-        name='coordinate-list'),
-    url(r'^koordinate/hinzufuegen',
-        coordinate.CoordinateAddView.as_view(),
-        name='coordinate-add'),
-    url(r'^koordinate/(?P<pk>\d+)/bearbeiten',
-        coordinate.CoordinateUpdateView.as_view(),
-        name='coordinate-edit'),
-    url(r'^koordinate/(?P<pk>\d+)/anzeigen',
-        coordinate.CoordinateDeatilView.as_view(),
-        name='coordinate-detail'),
-    url(r'^koordinate/(?P<pk>\d+)/loeschen',
-        coordinate.CoordinateDeleteView.as_view(),
-        name='coordinate-delete'),
+    # Answer configs
+    url(r'^antwort-konfig/(?P<pk>\d+)/bearbeiten',
+        answer_config.AnswerConfigUpdateView.as_view(),
+        name='answer-config-edit'),
+    
+    
+    # Question configs
+    url(r'^frage-konfig/liste$',
+        question_config.QuestionConfigListView.as_view(),
+        name='question-config-list'),
+    url(r'^frage-konfig/hinzufuegen',
+        question_config.QuestionConfigAddView.as_view(),
+        name='question-config-add'),
+    url(r'^frage-konfig/(?P<pk>\d+)/bearbeiten',
+        question_config.QuestionConfigUpdateView.as_view(),
+        name='question-config-edit'),
+    url(r'^frage-konfig/(?P<pk>\d+)/anzeigen',
+        question_config.QuestionConfigDeatilView.as_view(),
+        name='question-config-detail'),
+    url(r'^frage-konfig/(?P<pk>\d+)/loeschen',
+        question_config.QuestionConfigDeleteView.as_view(),
+        name='question-config-delete'),
+
 )

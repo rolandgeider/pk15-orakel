@@ -54,6 +54,7 @@
                 {% if perms.question %}
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'oracle:coordinate-list' %}">Koordinaten</a></li>
+                    <li><a href="{% url 'oracle:question-config-list' %}">Teamfragen</a></li>
                     <li><a href="{% url 'oracle:question-list' %}">Fragen</a></li>
                     <li><a href="{% url 'core:team-list' %}">Teams</a></li>
                 </ul>

@@ -46,11 +46,20 @@ class Coordinate(models.Model):
     '''
     A geographical point, used for questions
     '''
+    class Meta:
+        '''
+        Configure other properties
+        '''
+        ordering = ["description", ]
+
     description = models.CharField(verbose_name=u'Beschreibung',
                                    help_text=u'Wird nur im Admininterface verwendet',
                                    max_length=30)
     lat = models.FloatField()
     lon = models.FloatField()
+
+    uuid = models.CharField(verbose_name='UUID',
+                            max_length=36)
 
     def get_owner_object(self):
         '''
@@ -79,7 +88,7 @@ class Question(models.Model):
         return None
 
     def __unicode__(self):
-        return "#{0} - {1}".format(self.pk, self.question[:15])
+        return u"#{0} - {1}".format(self.pk, self.question[:15])
 
 
 class Answer(models.Model):
@@ -105,3 +114,74 @@ class Answer(models.Model):
 
     def __unicode__(self):
         return self.answer
+
+
+class QuestionConfig(models.Model):
+    '''
+    A configured question
+    '''
+
+    class Meta:
+        '''
+        Configure other properties
+        '''
+        ordering = ["team", "question"]
+        unique_together = ('team', 'coordinate')
+
+    question = models.ForeignKey(Question,
+                                 verbose_name='Frage')
+
+    team = models.ForeignKey(Team,
+                             verbose_name='Team')
+
+    coordinate = models.ForeignKey(Coordinate,
+                                   verbose_name='Koordinate')
+
+    def get_owner_object(self):
+        '''
+        Needed for generic views, not used
+        '''
+        return None
+
+    def __unicode__(self):
+        return "#{0}".format(self.pk)
+
+
+class AnswerConfig(models.Model):
+    '''
+    A configured answer
+    '''
+
+    class Meta:
+        '''
+        Configure other properties
+        '''
+        pass
+        ordering = ["is_wrong", ]
+        #unique_together = ('id', 'is_wrong')
+
+    question_config = models.ForeignKey(QuestionConfig,
+                                        verbose_name='Teamfrage',
+                                        editable=False)
+
+    answer = models.ForeignKey(Answer,
+                               verbose_name='Antwort',
+                               editable=False)
+
+    next_coordinate = models.ForeignKey(Coordinate,
+                                        verbose_name='Nächste Koordinate',
+                                        null=True,
+                                        blank=True)
+
+    is_wrong = models.BooleanField(verbose_name='Falsche Antwort',
+                                   help_text=u"falsche Antwort, schickt das Team zur Intevation",
+                                   default=False)
+
+    def get_owner_object(self):
+        '''
+        Needed for generic views, not used
+        '''
+        return None
+
+    def __unicode__(self):
+        return "#{0}".format(self.pk)

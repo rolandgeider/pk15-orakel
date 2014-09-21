@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
+import uuid
+
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext as _
@@ -58,6 +60,9 @@ class CoordinateAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
     form_action = reverse_lazy('oracle:coordinate-add')
     permission_required = 'oracle.add_coordinate'
 
+    def get_initial(self):
+        return {'uuid': uuid.uuid4()}
+
 
 class CoordinateUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
     '''
@@ -75,7 +80,7 @@ class CoordinateUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
         '''
         context = super(CoordinateUpdateView, self).get_context_data(**kwargs)
         context['form_action'] = reverse('oracle:coordinate-edit', kwargs={'pk': self.object.id})
-        context['title'] = _('Edit {0}'.format(self.object))
+        context['title'] = _(u'Edit {0}'.format(self.object))
         return context
 
 
