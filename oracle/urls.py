@@ -18,6 +18,7 @@
 from django.conf.urls import patterns, url
 
 from oracle.views import question
+from oracle.views import answer
 from oracle.views import coordinate
 from oracle.views import misc
 
@@ -45,6 +46,17 @@ urlpatterns = patterns('',
     url(r'^frage/(?P<pk>\d+)/loeschen',
         question.QuestionDeleteView.as_view(),
         name='question-delete'),
+
+    # Answers
+    url(r'^antwort/hinzufuegen',
+        answer.AnswerAddView.as_view(),
+        name='answer-add'),
+    url(r'^antwort/(?P<pk>\d+)/bearbeiten',
+        answer.AnswerUpdateView.as_view(),
+        name='answer-edit'),
+    url(r'^antwort/(?P<pk>\d+)/loeschen',
+        answer.AnswerDeleteView.as_view(),
+        name='answer-delete'),
 
     # Coordinates
     url(r'^koordinate/liste$',

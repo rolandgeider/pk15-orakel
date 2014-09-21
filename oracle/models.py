@@ -66,10 +66,6 @@ class Question(models.Model):
     '''
     A question
     '''
-    team = models.ForeignKey(Team, verbose_name='Team')
-    '''
-    Team this question belongs to
-    '''
 
     question = models.TextField(verbose_name='Frage')
     '''
@@ -83,7 +79,7 @@ class Question(models.Model):
         return None
 
     def __unicode__(self):
-        return self.question[:15]
+        return "#{0} - {1}".format(self.pk, self.question[:15])
 
 
 class Answer(models.Model):
@@ -95,10 +91,17 @@ class Answer(models.Model):
     Question this answer belongs to
     '''
 
-    answer = models.TextField(verbose_name='Antwort')
+    answer = models.CharField(verbose_name='Antwort',
+                              max_length=30)
     '''
     Actual question
     '''
 
-    lat = models.FloatField()
-    long = models.FloatField()
+    def get_owner_object(self):
+        '''
+        Needed for generic views, not used
+        '''
+        return None
+
+    def __unicode__(self):
+        return self.answer

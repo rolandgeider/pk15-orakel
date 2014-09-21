@@ -7,16 +7,22 @@
 
 
 {% block content %}
-<pre>
+<code>
     {{question.question}}
-</pre>
+</code>
 
 {% if perms.oracle.add_question %}
     <h4>Antworten</h4>
+    <ul>
     {% for answer in question.answer_set.all %}
+        <li>
+            <a href="{% url 'oracle:answer-delete' answer.pk %}">[x]</a>
+            {{answer}}
+        </li>
     {% empty %}
-        <em>Die Frage hat keine Antworten</em>
+        <li>Die Frage hat keine Antworten</li>
     {% endfor %}
+    </ul>
 {% endif %}
 {% endblock %}
 
@@ -28,5 +34,6 @@
 <h4>Optionen</h4>
 <p><a href="{% url 'oracle:question-delete' question.id %}">Löschen</a></p>
 <p><a href="{% url 'oracle:question-edit' question.id %}">Bearbeiten</a></p>
+<p><a href="{% url 'oracle:answer-add' %}?question={{question.id}}">Antwort hinzufügen</a></p>
 {% endif %}
 {% endblock %}
