@@ -18,9 +18,15 @@
 from django.conf.urls import patterns, url
 
 from oracle.views import question
+from oracle.views import misc
 
 
 urlpatterns = patterns('',
+
+    # Index
+    url(r'^dashboard$',
+        misc.dashboard,
+        name='dashboard'),
 
     # Questions
     url(r'^frage/liste$',

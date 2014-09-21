@@ -30,7 +30,7 @@ def index(request):
     Index page
     '''
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('core:dashboard'))
+        return HttpResponseRedirect(reverse('oracle:dashboard'))
     else:
         return HttpResponseRedirect(reverse('core:login'))
 
