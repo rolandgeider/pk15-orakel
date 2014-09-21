@@ -20,6 +20,15 @@ from django.forms.widgets import CheckboxInput, ClearableFileInput
 register = template.Library()
 
 
+@register.inclusion_tag('tags/osm_coordinate.html')
+def osm_coordinate(lat, lon):
+    '''
+    Renders the coordinate on an openstreetmap map
+    '''
+
+    return {'lat': lat,
+            'lon': lon}
+
 
 #
 # Form utils

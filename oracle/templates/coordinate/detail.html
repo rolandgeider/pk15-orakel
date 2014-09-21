@@ -22,7 +22,7 @@
     </tr>
 </table>
 
-<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=8.039020299911499,52.27388885073032,8.048644065856934,52.278549642981815&amp;layer=mapnik&amp;marker={{coordinate.lat|stringformat:'f'}},{{coordinate.lon|stringformat:'f'}}" style="border: 1px solid black"></iframe>
+{% osm_coordinate coordinate.lat coordinate.lon %}
 
 {% if perms.oracle.add_coordinate %}
     {# TODO: Fragen und antworten hier? #}
