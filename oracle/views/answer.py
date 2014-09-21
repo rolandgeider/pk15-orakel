@@ -54,8 +54,10 @@ class AnswerUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
 
     model = Answer
     title = u'Antwort bearbeiten'
-    success_url = reverse_lazy('oracle:answer-list')
     permission_required = 'oracle.change_answer'
+
+    def get_success_url(self):
+        return reverse('oracle:question-detail', kwargs={'pk': self.object.question.pk})
 
     def get_context_data(self, **kwargs):
         '''
