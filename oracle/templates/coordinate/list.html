@@ -25,9 +25,9 @@
     </td>
     <td>{{coordinate.lat}}</td>
     <td>{{coordinate.lon}}</td>
-    <td class="no-hover">
-        <a href="{% url 'oracle:coordinate-delete' coordinate.id %}">Löschen</a>
-        <a href="{% url 'oracle:coordinate-edit' coordinate.id %}">Bearbeiten</a>
+    <td>
+        <a href="{% url 'oracle:coordinate-edit' coordinate.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="{% url 'oracle:coordinate-delete' coordinate.id %}"><span class="glyphicon glyphicon-trash"></span></a>
     </td>
 </tr>
 {% empty %}

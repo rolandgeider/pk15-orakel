@@ -22,8 +22,8 @@
         <a href="{% url 'oracle:question-detail' question.id %}">{{question.question|truncatewords:4 }}</a>
     </td>
     <td class="no-hover">
-        <a href="{% url 'oracle:question-delete' question.id %}">Löschen</a>
-        <a href="{% url 'oracle:question-edit' question.id %}">Bearbeiten</a>
+        <a href="{% url 'oracle:question-delete' question.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+        <a href="{% url 'oracle:question-edit' question.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
     </td>
 </tr>
 {% empty %}

@@ -16,8 +16,8 @@
     <ul>
     {% for answer in question.answer_set.all %}
         <li>
-            <a href="{% url 'oracle:answer-delete' answer.pk %}">[x]</a>
-            <a href="{% url 'oracle:answer-edit' answer.pk %}">[e]</a>
+            <a href="{% url 'oracle:answer-delete' answer.pk %}"><span class="glyphicon glyphicon-trash"></span></a>
+            <a href="{% url 'oracle:answer-edit' answer.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             {{answer}}
         </li>
     {% empty %}

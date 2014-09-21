@@ -20,8 +20,8 @@
 <tr>
     <td>{{team.name}}</td>
     <td class="no-hover">
-        <a href="{% url 'core:team-delete' team.id %}">Löschen</a>
-        <a href="{% url 'core:team-edit' team.id %}">Bearbeiten</a>
+        <a href="{% url 'core:team-delete' team.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+        <a href="{% url 'core:team-edit' team.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
     </td>
 </tr>
 {% empty %}
