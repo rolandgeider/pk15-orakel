@@ -31,7 +31,9 @@ urlpatterns = patterns('',
     url(r'^dashboard$',
         misc.dashboard,
         name='dashboard'),
-
+    url(r'^koordinate-(?P<uuid>[0-9a-f-]{1,36})',
+        misc.check_step,
+        name='check-step'),
     
     # Coordinates
     url(r'^koordinate/liste$',

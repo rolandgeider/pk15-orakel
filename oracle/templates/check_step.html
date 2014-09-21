@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n staticfiles wger_extras %}
+
+{% block title %}{{question_config.question.question}}{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+<form action="{{form_action}}"
+      method="post"
+      class="form-horizontal"
+      role="form">
+    {% render_form_fields form %}
+</form>
+{% endblock %}
+
+
+
+{% block sidebar %}
+<h4>Info</h4>
+<p>
+    Die Bonusfragen zu <strong>Ort</strong> und <strong>Bezug zur Intevation</strong>
+    sind zwar optional, sollten aber trotzdem beantwortet werden... :-)
+</p>
+{% endblock %}

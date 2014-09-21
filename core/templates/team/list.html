@@ -18,7 +18,9 @@
 <tbody>
 {% for team in team_list %}
 <tr>
-    <td>{{team.name}}</td>
+    <td>
+        <a href="{% url 'core:team-detail' team.pk %}">{{team.name}}</a>
+    </td>
     <td class="no-hover">
         <a href="{% url 'core:team-delete' team.id %}"><span class="glyphicon glyphicon-trash"></span></a>
         <a href="{% url 'core:team-edit' team.id %}"><span class="glyphicon glyphicon-pencil"></span></a>

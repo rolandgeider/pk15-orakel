@@ -19,10 +19,11 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic import DeleteView
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
+from oracle.models import TeamAnswerLog
 
 from utils.generic_views import WgerFormMixin
 from utils.generic_views import WgerDeleteMixin
@@ -30,6 +31,24 @@ from utils.generic_views import WgerPermissionMixin
 
 from core.models import Team, UserProfile
 from utils.password import password_generator
+
+
+class TeamDetailView(WgerPermissionMixin, DetailView):
+    '''
+    Deatail view for a question
+    '''
+    model = Team
+    permission_required = 'core.add_team'
+    template_name = 'team/detail.html'
+
+    def get_context_data(self, **kwargs):
+        '''
+        Send some additional data to the template
+        '''
+        context = super(TeamDetailView, self).get_context_data(**kwargs)
+        print TeamAnswerLog.objects.filter(team=self.object)
+        context['answer_log'] = TeamAnswerLog.objects.filter(team=self.object)
+        return context
 
 
 class TeamListView(WgerPermissionMixin, ListView):

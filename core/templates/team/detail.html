@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Übersicht {{team.name}}{% endblock %}
+
+
+{% block content %}
+<h3>Abgegebene Antworten</h3>
+{% for log in answer_log %}
+    <table class="table">
+        <tr class="active">
+            <th style="width: 30%;">Frage</th>
+            <td>
+                {{log.question_config.question.question}}
+                (Ort: {{log.question_config.coordinate.description}})
+            </td>
+        </tr>
+
+        <tr>
+            <th>Teamantwort</th>
+            <td>{{log.team_answer.answer}}</td>
+        <tr>
+            <th>Wo sind wir</th>
+            <td>{{log.place}}</td>
+        </tr>
+        <tr>
+            <th>Bezug zur intevation</th>
+            <td>{{log.reference}}</td>
+        </tr>
+    </table>
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.core.add_team %}
+<h4>Optionen</h4>
+
+{% endif %}
+{% endblock %}

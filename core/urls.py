@@ -36,6 +36,9 @@ urlpatterns = patterns('',
         name='login'),
 
     # Teams
+    url(r'^team/(?P<pk>\d+)/list$',
+        team.TeamDetailView.as_view(),
+        name='team-detail'),
     url(r'^team/list$',
         team.TeamListView.as_view(),
         name='team-list'),

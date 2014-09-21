@@ -125,7 +125,7 @@ class QuestionConfig(models.Model):
         '''
         Configure other properties
         '''
-        ordering = ["team", "question"]
+        ordering = ["team", "-question"]
         unique_together = ('team', 'coordinate')
 
     question = models.ForeignKey(Question,
@@ -185,3 +185,30 @@ class AnswerConfig(models.Model):
 
     def __unicode__(self):
         return "#{0} - {1}".format(self.pk, self.answer)
+
+
+class TeamAnswerLog(models.Model):
+    '''
+    The answer to a question given by a team
+    '''
+
+    class Meta:
+        '''
+        Configure other properties
+        '''
+        #ordering = ["is_wrong", ]
+
+    team = models.ForeignKey(Team)
+    question_config = models.ForeignKey(QuestionConfig)
+    team_answer = models.ForeignKey(Answer)
+    place = models.TextField()
+    reference = models.TextField()
+
+    def get_owner_object(self):
+        '''
+        Needed for generic views, not used
+        '''
+        return None
+
+    def __unicode__(self):
+        return "#{0}".format(self.pk)

@@ -20,6 +20,10 @@
         <th>Koordinate</th>
         <td>{{questionconfig.coordinate}}</td>
     </tr>
+    <tr>
+        <th>URL (für QR-Code)</th>
+        <td>{% url 'oracle:check-step' questionconfig.coordinate.uuid %}</td>
+    </tr>
 </table>
 {% osm_coordinate questionconfig.coordinate.lat questionconfig.coordinate.lon %}
 
