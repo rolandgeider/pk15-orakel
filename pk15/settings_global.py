@@ -106,6 +106,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # QR code generation
+    'qrcode',
+
     # PK15 app
     'core',
     'oracle'

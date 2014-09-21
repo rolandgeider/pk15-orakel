@@ -49,7 +49,6 @@ class QuestionConfigDeatilView(WgerPermissionMixin, DetailView):
     permission_required = 'oracle.add_questionconfig'
     template_name = 'question_config/detail.html'
 
-
 class QuestionConfigAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
     '''
     View to add a new team

@@ -31,11 +31,11 @@ urlpatterns = patterns('',
     url(r'^dashboard$',
         misc.dashboard,
         name='dashboard'),
-    url(r'^koordinate-(?P<uuid>[0-9a-f-]{1,36})',
+
+    # Coordinates
+    url(r'^koordinate/(?P<uuid>[0-9a-f-]{1,36})$',
         misc.check_step,
         name='check-step'),
-    
-    # Coordinates
     url(r'^koordinate/liste$',
         coordinate.CoordinateListView.as_view(),
         name='coordinate-list'),
@@ -46,7 +46,7 @@ urlpatterns = patterns('',
         coordinate.CoordinateUpdateView.as_view(),
         name='coordinate-edit'),
     url(r'^koordinate/(?P<pk>\d+)/anzeigen',
-        coordinate.CoordinateDeatilView.as_view(),
+        coordinate.CoordinateDetaillView.as_view(),
         name='coordinate-detail'),
     url(r'^koordinate/(?P<pk>\d+)/loeschen',
         coordinate.CoordinateDeleteView.as_view(),

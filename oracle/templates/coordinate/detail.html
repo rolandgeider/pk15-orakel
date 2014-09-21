@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load wger_extras %}
+{% load qr_tags %}
 
 {% block title %}Koordinate #{{coordinate.pk}}{% endblock %}
 
@@ -43,5 +44,10 @@
 <p><a href="{% url 'oracle:coordinate-edit' coordinate.id %}">Bearbeiten</a></p>
 <p><a href="http://www.openstreetmap.org/?mlat={{coordinate.lat|stringformat:'f'}}&amp;mlon={{coordinate.lon|stringformat:'f'}}#map=16/{{coordinate.lat|stringformat:'f'}}/{{coordinate.lon|stringformat:'f'}}">Auf Karte anzeigen</a></p>
 
+<h4>QR-Code</h4>
+{% qr_from_text qr_url "m" %}
+
+<p><strong>URL (für QR-Code):</strong> {{qr_url}}</p>
 {% endif %}
+
 {% endblock %}

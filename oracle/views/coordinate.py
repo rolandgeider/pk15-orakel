@@ -40,13 +40,22 @@ class CoordinateListView(WgerPermissionMixin, ListView):
     template_name = 'coordinate/list.html'
 
 
-class CoordinateDeatilView(WgerPermissionMixin, DetailView):
+class CoordinateDetaillView(WgerPermissionMixin, DetailView):
     '''
     Deatail view for a question
     '''
     model = Coordinate
     permission_required = 'oracle.add_coordinate'
     template_name = 'coordinate/detail.html'
+
+    def get_context_data(self, **kwargs):
+        '''
+        Send some additional data to the template
+        '''
+        context = super(CoordinateDetaillView, self).get_context_data(**kwargs)
+        relative_url = reverse('oracle:check-step', kwargs={'uuid': self.object.uuid})
+        context['qr_url'] = self.request.build_absolute_uri(relative_url)
+        return context
 
 
 class CoordinateAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
