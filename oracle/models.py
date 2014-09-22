@@ -58,6 +58,10 @@ class Coordinate(models.Model):
     lat = models.FloatField()
     lon = models.FloatField()
 
+    is_jail = models.BooleanField(verbose_name=u"Ist Strafort",
+                                  help_text=u"Wird bei falschen Antworten verwendet",
+                                  default=False)
+
     uuid = models.CharField(verbose_name='UUID',
                             max_length=36)
 

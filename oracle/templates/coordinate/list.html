@@ -22,6 +22,9 @@
 <tr>
     <td>
         <a href="{% url 'oracle:coordinate-detail' coordinate.id %}">{{coordinate.description|truncatewords:4 }}</a>
+        {% if coordinate.is_jail %}
+            <span class="label label-warning">Kerker</span>
+        {% endif %}
     </td>
     <td>{{coordinate.lat}}</td>
     <td>{{coordinate.lon}}</td>

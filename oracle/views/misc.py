@@ -13,6 +13,8 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
+import random
+
 from django import forms
 
 from django.contrib.auth.decorators import login_required
@@ -46,6 +48,19 @@ def check_step(request, uuid):
     context['coordinate'] = coordinate
     team = request.user.userprofile.team
 
+    # Check if the user was sent to jail
+    #
+    # In this case, the next coordinate is the first correct answer of
+    # the previous question and there is no need to answer anything.
+    if coordinate.is_jail:
+        answer_log = TeamAnswerLog.objects.filter(team=team).last()
+        answer_config_set = answer_log.question_config.answerconfig_set
+        next_coordinate = answer_config_set.filter(is_wrong=False).first().next_coordinate
+        return HttpResponseRedirect(reverse('oracle:coordinate-show',
+                                            kwargs={'lat': next_coordinate.lat,
+                                                    'lon': next_coordinate.lon,
+                                                    'question': 100}))
+
 
     if request.user.has_perm('oracle.add_question'):
         return HttpResponseForbidden('Sorry admin, only regular users can access this')
@@ -66,7 +81,7 @@ def check_step(request, uuid):
 
     # Is it the correct step?
 
-    # Is it "jail"?
+
 
     class AnswerLogForm(Form):
         answer = forms.ModelChoiceField(queryset=Answer.objects.filter(question=question_config.question),
@@ -93,13 +108,13 @@ def check_step(request, uuid):
             answer_log.save()
 
             answer_config = AnswerConfig.objects.get(answer=form.cleaned_data['answer'],
-                                                     question_config__team=request.user.userprofile.team)
-            coordinate = answer_config.next_coordinate
+                                                     question_config=question_config)
+            next_coordinate = answer_config.next_coordinate
 
-            #print(coordinate)
             return HttpResponseRedirect(reverse('oracle:coordinate-show',
-                                                kwargs={'lat': coordinate.lat,
-                                                        'lon': coordinate.lon}))
+                                                kwargs={'lat': next_coordinate.lat,
+                                                        'lon': next_coordinate.lon,
+                                                        'question': random.randrange(10)}))
         else:
             pass
 

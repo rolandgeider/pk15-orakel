@@ -4,13 +4,38 @@
 {% load wger_extras %}
 {% load qr_tags %}
 
-{% block title %}Nächste Koordinate{% endblock %}
+{% block title %}
+        {% if question == 1 %}
+            Das war echt Eure Antwort?
+        {% elif question == 2 %}
+            Kein Kommentar
+        {% elif question == 3 %}
+            Im Ernst? Gut, dann bitte hier weiter
+        {% elif question == 4 %}
+            Ähhh.... ja
+        {% elif question == 5 %}
+            Antworten per Zufall auswählen, gefällt mir!
+        {% elif question == 6 %}
+            Wow, die Antwort hat tatsächlich jemand ausgewählt
+        {% elif question == 7 %}
+            Wir müssen über die Bonusfragen mal reden
+        {% elif question == 8 %}
+            Von mir aus
+        {% elif question == 9 %}
+            Glückwunsch, das war eine schwierige Frage
+        {# Jail #}
+        {% elif question == 100 %}
+            Und weiter geht's!
+        {% else %}
+            OK...
+        {% endif %}
+{% endblock %}
 
 
 {% block content %}
 <div class="well">
-    <h2>{{lat}}</h2>
-    <h2>{{lon}}</h2>
+    <h3>{{lat}}</h3>
+    <h3>{{lon}}</h3>
 </div>
 {% endblock %}
 

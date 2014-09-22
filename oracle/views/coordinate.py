@@ -34,13 +34,14 @@ from oracle.models import Coordinate
 
 
 @login_required
-def show(request, lat, lon):
+def show(request, lat, lon, question):
     '''
     Small view that simply outputs two coordinates
     '''
 
     context = {'lat': lat,
-               'lon': lon}
+               'lon': lon,
+               'question': int(question)}
     return render(request, 'coordinate/show.html', context)
 
 
