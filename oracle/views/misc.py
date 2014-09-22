@@ -33,9 +33,6 @@ def dashboard(request):
     return render(request, 'index.html', context)
 
 
-
-
-
 @login_required
 def check_step(request, uuid):
     '''
@@ -71,7 +68,6 @@ def check_step(request, uuid):
 
     # Is it "jail"?
 
-
     class AnswerLogForm(Form):
         answer = forms.ModelChoiceField(queryset=Answer.objects.filter(question=question_config.question),
                                         empty_label=u"--- bitte wählen ---",
@@ -96,8 +92,14 @@ def check_step(request, uuid):
             answer_log.reference = form.cleaned_data['reference']
             answer_log.save()
 
-            # request.session[....] = ...
-            return HttpResponseRedirect(reverse('oracle:dashboard'))
+            answer_config = AnswerConfig.objects.get(answer=form.cleaned_data['answer'],
+                                                     question_config__team=request.user.userprofile.team)
+            coordinate = answer_config.next_coordinate
+
+            #print(coordinate)
+            return HttpResponseRedirect(reverse('oracle:coordinate-show',
+                                                kwargs={'lat': coordinate.lat,
+                                                        'lon': coordinate.lon}))
         else:
             pass
 

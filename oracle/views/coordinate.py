@@ -15,9 +15,11 @@
 # You should have received a copy of the GNU Affero General Public License
 
 import uuid
+from django.contrib.auth.decorators import login_required
 
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.views.generic import ListView, DetailView
 from django.views.generic import DeleteView
@@ -29,6 +31,17 @@ from utils.generic_views import WgerDeleteMixin
 from utils.generic_views import WgerPermissionMixin
 
 from oracle.models import Coordinate
+
+
+@login_required
+def show(request, lat, lon):
+    '''
+    Small view that simply outputs two coordinates
+    '''
+
+    context = {'lat': lat,
+               'lon': lon}
+    return render(request, 'coordinate/show.html', context)
 
 
 class CoordinateListView(WgerPermissionMixin, ListView):
