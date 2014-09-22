@@ -30,7 +30,6 @@ urlpatterns = patterns('',
 
     
     # User
-    #url(r'^$',
     url(r'^user/login$',
         user.login,
         name='login'),

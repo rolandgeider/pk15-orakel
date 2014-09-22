@@ -203,6 +203,7 @@ class TeamAnswerLog(models.Model):
     team_answer = models.ForeignKey(Answer)
     place = models.TextField()
     reference = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
 
     def get_owner_object(self):
         '''
