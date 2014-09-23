@@ -31,7 +31,7 @@
         <td>{{config.pk}}</td>
         <td>{{config.coordinate}}</td>
         <td>
-            <a href="{% url 'oracle:question-config-detail' config.id %}">{{config.question|truncatewords:4 }}</a>
+            <a href="{% url 'oracle:question-config-detail' config.id %}">{{config.question|truncatewords:8 }}</a>
         </td>
     </tr>
 {% empty %}

@@ -19,7 +19,7 @@
 {% for question in question_list %}
 <tr>
     <td>
-        <a href="{% url 'oracle:question-detail' question.id %}">{{question.question|truncatewords:4 }}</a>
+        <a href="{% url 'oracle:question-detail' question.id %}">{{question.question|truncatewords:8 }}</a>
         {% if not question.answer_set.count %}
             <span class="label label-danger">keine Antworten!</span>
         {% endif %}
