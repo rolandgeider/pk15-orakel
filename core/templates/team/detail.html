@@ -13,7 +13,7 @@
         <tr class="active">
             <th style="width: 30%;">Frage</th>
             <td>
-                {{log.question_config.question.question}}
+                {{log.question_config.question.question}}<br>mi
                 (Ort: {{log.question_config.coordinate.description}})
             </td>
         </tr>
@@ -24,7 +24,14 @@
         <tr>
         <tr>
             <th>Teamantwort</th>
-            <td>{{log.team_answer.answer}}</td>
+            <td>
+                {% if log.team_answer.is_wrong %}
+                    <span class="glyphicon glyphicon-remove"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
+                {{log.team_answer.answer}}
+            </td>
         <tr>
             <th>Wo sind wir</th>
             <td>{{log.place}}</td>

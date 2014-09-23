@@ -55,7 +55,7 @@ def check_step(request, uuid):
     if coordinate.is_jail:
         answer_log = TeamAnswerLog.objects.filter(team=team).last()
         answer_config_set = answer_log.question_config.answerconfig_set
-        next_coordinate = answer_config_set.filter(is_wrong=False).first().next_coordinate
+        next_coordinate = answer_config_set.filter(answer__is_wrong=False).first().next_coordinate
         return HttpResponseRedirect(reverse('oracle:coordinate-show',
                                             kwargs={'lat': next_coordinate.lat,
                                                     'lon': next_coordinate.lon,

@@ -7,23 +7,39 @@
 
 
 {% block content %}
-<code>
-    {{question.question}}
-</code>
+<h4>{{question.question}}</h4>
+
 
 {% if perms.oracle.add_question %}
-    <h4>Antworten</h4>
-    <ul>
+    <table class="table">
+        <tr>
+            <th style="width:15%;">Aktionen</th>
+            <th style="width:15%;">Richtig</th>
+            <th>Antwort</th>
+        </tr>
     {% for answer in question.answer_set.all %}
-        <li>
-            <a href="{% url 'oracle:answer-delete' answer.pk %}"><span class="glyphicon glyphicon-trash"></span></a>
-            <a href="{% url 'oracle:answer-edit' answer.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-            {{answer}}
-        </li>
+        <tr>
+            <td>
+                <a href="{% url 'oracle:answer-delete' answer.pk %}"><span class="glyphicon glyphicon-trash"></span></a>
+                <a href="{% url 'oracle:answer-edit' answer.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            </td>
+            <td>
+                {% if answer.is_wrong %}
+                    <span class="glyphicon glyphicon-remove"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
+            </td>
+            <td>
+                {{answer}}
+            </td>
+        </tr>
     {% empty %}
-        <li>Die Frage hat keine Antworten</li>
+        <tr>
+            <td colspan="3">Die Frage hat keine Antworten</td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% endif %}
 {% endblock %}
 

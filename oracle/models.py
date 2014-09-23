@@ -104,6 +104,7 @@ class Answer(models.Model):
     '''
     An answer to a question
     '''
+
     question = models.ForeignKey(Question, verbose_name='Frage')
     '''
     Question this answer belongs to
@@ -112,8 +113,12 @@ class Answer(models.Model):
     answer = models.CharField(verbose_name='Antwort',
                               max_length=30)
     '''
-    Actual question
+    Answer
     '''
+
+    is_wrong = models.BooleanField(verbose_name='Falsche Antwort',
+                                   help_text=u"falsche Antwort, schickt das Team zur Intevation",
+                                   default=False)
 
     def get_owner_object(self):
         '''
@@ -163,12 +168,6 @@ class AnswerConfig(models.Model):
     A configured answer
     '''
 
-    class Meta:
-        '''
-        Configure other properties
-        '''
-        ordering = ["is_wrong", ]
-
     question_config = models.ForeignKey(QuestionConfig,
                                         verbose_name='Teamfrage',
                                         editable=False)
@@ -181,10 +180,6 @@ class AnswerConfig(models.Model):
                                         verbose_name='Nächste Koordinate',
                                         null=True,
                                         blank=True)
-
-    is_wrong = models.BooleanField(verbose_name='Falsche Antwort',
-                                   help_text=u"falsche Antwort, schickt das Team zur Intevation",
-                                   default=False)
 
     def get_owner_object(self):
         '''
@@ -205,7 +200,7 @@ class TeamAnswerLog(models.Model):
         '''
         Configure other properties
         '''
-        #ordering = ["is_wrong", ]
+        ordering = ["time", ]
 
     team = models.ForeignKey(Team)
     question_config = models.ForeignKey(QuestionConfig)

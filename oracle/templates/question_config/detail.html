@@ -39,6 +39,11 @@
                 <a href="{% url 'oracle:answer-config-edit' answer_config.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             </td>
             <td>
+                {% if answer_config.answer.is_wrong %}
+                    <span class="glyphicon glyphicon-remove"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
                 {{answer_config.answer.answer}}
             </td>
             <td>
@@ -46,10 +51,6 @@
                     <span class="label label-danger">keine Koordinaten!</span>
                 {% else %}
                     {{answer_config.next_coordinate}}
-                {% endif %}
-
-                {% if answer_config.is_wrong %}
-                    <span class="label label-warning">falsche Antwort</span>
                 {% endif %}
             </td>
         </tr>

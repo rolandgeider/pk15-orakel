@@ -43,7 +43,7 @@
             {% for answer_config in config.answerconfig_set.all %}
                  <tr>
                      <td>
-                         {% if answer_config.is_wrong %}
+                         {% if answer_config.answer.is_wrong %}
                              <span class="glyphicon glyphicon-remove"></span>
                          {% else %}
                              <span class="glyphicon glyphicon-ok"></span>
