@@ -134,12 +134,11 @@ class QuestionConfig(models.Model):
                             ('team', 'coordinate'),
                             ('team', 'question')
                           )
-
-    question = models.ForeignKey(Question,
-                                 verbose_name='Frage')
-
     team = models.ForeignKey(Team,
                              verbose_name='Team')
+    
+    question = models.ForeignKey(Question,
+                                 verbose_name='Frage')
 
     coordinate = models.ForeignKey(Coordinate,
                                    verbose_name='Koordinate')
