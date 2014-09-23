@@ -130,7 +130,10 @@ class QuestionConfig(models.Model):
         Configure other properties
         '''
         ordering = ["team", "-question"]
-        unique_together = ('team', 'coordinate')
+        unique_together = (
+                            ('team', 'coordinate'),
+                            ('team', 'question')
+                          )
 
     question = models.ForeignKey(Question,
                                  verbose_name='Frage')
