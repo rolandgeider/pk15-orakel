@@ -16,6 +16,8 @@
 
 
 from django.db import models
+from django.core.urlresolvers import reverse
+
 from core.models import Team
 
 
@@ -64,6 +66,9 @@ class Coordinate(models.Model):
 
     uuid = models.CharField(verbose_name='UUID',
                             max_length=36)
+
+    def get_absolute_url(self):
+        return reverse('oracle:coordinate-detail', kwargs={'pk': self.pk})
 
     def get_owner_object(self):
         '''
@@ -188,7 +193,7 @@ class AnswerConfig(models.Model):
         return None
 
     def __unicode__(self):
-        return "#{0} - {1}".format(self.pk, self.answer)
+        return u"#{0} - {1}".format(self.pk, self.answer)
 
 
 class TeamAnswerLog(models.Model):

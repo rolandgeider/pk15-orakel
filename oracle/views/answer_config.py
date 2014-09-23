@@ -43,5 +43,5 @@ class AnswerConfigUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
         '''
         context = super(AnswerConfigUpdateView, self).get_context_data(**kwargs)
         context['form_action'] = reverse('oracle:answer-config-edit', kwargs={'pk': self.object.id})
-        context['title'] = _('Edit {0}'.format(self.object))
+        context['title'] = u'Bearbeite {0}'.format(self.object)
         return context

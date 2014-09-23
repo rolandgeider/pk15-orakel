@@ -78,7 +78,6 @@ class CoordinateAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
     '''
 
     model = Coordinate
-    success_url = reverse_lazy('oracle:coordinate-list')
     title = u'Frage hinzufügen'
     form_action = reverse_lazy('oracle:coordinate-add')
     permission_required = 'oracle.add_coordinate'
@@ -94,7 +93,7 @@ class CoordinateUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
 
     model = Coordinate
     title = u'Team bearbeiten'
-    success_url = reverse_lazy('oracle:coordinate-list')
+    #success_url = reverse_lazy('oracle:coordinate-list')
     permission_required = 'oracle.change_coordinate'
 
     def get_context_data(self, **kwargs):
