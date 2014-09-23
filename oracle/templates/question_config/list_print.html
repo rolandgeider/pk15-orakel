@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load wger_extras %}
+
+{% block title %}Teamfragenübersicht{% endblock %}
+
+
+{% block content %}
+
+<table class="table">
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Koordinate</th>
+    <th>Frage</th>
+</tr>
+</thead>
+
+<tbody>
+{% for config in questionconfig_list %}
+    {% ifchanged config.team %}
+    <tr>
+        <th colspan="3" class="active">
+            {{config.team}}
+        </th>
+    </tr>
+    {% endifchanged %}
+    <tr>
+        <td>{{config.pk}}</td>
+        <td>
+            {{config.coordinate}}<br>
+            (lat: {{config.coordinate.lat}}, lon: {{config.coordinate.lon}})
+        </td>
+        <td>
+            {{config.question}}
+            <table class="table">
+            <tr>
+                <td>Antwort</td>
+                <td>Nächste Koordinaten</td>
+            </tr>
+            {% for answer_config in config.answerconfig_set.all %}
+                 <tr>
+                     <td>
+                         {% if answer_config.is_wrong %}
+                             <span class="glyphicon glyphicon-remove"></span>
+                         {% else %}
+                             <span class="glyphicon glyphicon-ok"></span>
+                         {% endif %}
+                         {{answer_config.answer.answer}}
+                     </td>
+                     <td>
+                         {{answer_config.next_coordinate}}<br>
+                         (lat: {{answer_config.next_coordinate.lat}}, lon: {{answer_config.next_coordinate.lon}})
+                     </td>
+                 </tr>
+            {% endfor %}
+            </table>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="3">Keine Teamfragen gefunden</td>
+    </tr>
+{% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+{% if perms.oracle.add_questionconfig %}
+{% endif %}
+{% endblock %}

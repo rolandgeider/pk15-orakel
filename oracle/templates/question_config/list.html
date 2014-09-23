@@ -50,8 +50,7 @@
 {% block sidebar %}
 {% if perms.oracle.add_questionconfig %}
 <h4>Optionen</h4>
-<p>
-       <a href="{% url 'oracle:question-config-add' %}">Teamfrage hinzufügen</a>
-</p>
+<p><a href="{% url 'oracle:question-config-add' %}">Teamfrage hinzufügen</a></p>
+<p><a href="{% url 'oracle:question-config-list-printer' %}">Druckerfreundliche Liste</a></p>
 {% endif %}
 {% endblock %}
