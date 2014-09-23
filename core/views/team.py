@@ -30,6 +30,7 @@ from utils.generic_views import WgerDeleteMixin
 from utils.generic_views import WgerPermissionMixin
 
 from core.models import Team, UserProfile
+from oracle.models import AnswerConfig
 from utils.password import password_generator
 
 
@@ -45,9 +46,21 @@ class TeamDetailView(WgerPermissionMixin, DetailView):
         '''
         Send some additional data to the template
         '''
+        answer_log = TeamAnswerLog.objects.filter(team=self.object)
+        count = 0
+        first_log = answer_log.first()
+        last_log = answer_log.last()
+        for answer in answer_log.all():
+            answer_config = AnswerConfig.objects.filter(question_config=answer.question_config,
+                                                        answer=answer.team_answer,
+                                                        is_wrong=True)
+            count += answer_config.count()
+
         context = super(TeamDetailView, self).get_context_data(**kwargs)
-        print TeamAnswerLog.objects.filter(team=self.object)
-        context['answer_log'] = TeamAnswerLog.objects.filter(team=self.object)
+        context['answer_log'] = answer_log
+        context['wrong_answers'] = count
+        context['time_diff'] = last_log.time - first_log.time
+
         return context
 
 

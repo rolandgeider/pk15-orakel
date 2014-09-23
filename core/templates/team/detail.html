@@ -43,7 +43,10 @@
 
 {% block sidebar %}
 {% if perms.core.add_team %}
-<h4>Optionen</h4>
-
+<h4>Info</h4>
+<ul>
+    <li>Falsche Antworten: {{ wrong_answers }}</li>
+    <li>Zeit: {{ time_diff }}</li>
+</ul>
 {% endif %}
 {% endblock %}

@@ -163,9 +163,7 @@ class AnswerConfig(models.Model):
         '''
         Configure other properties
         '''
-        pass
         ordering = ["is_wrong", ]
-        #unique_together = ('id', 'is_wrong')
 
     question_config = models.ForeignKey(QuestionConfig,
                                         verbose_name='Teamfrage',
