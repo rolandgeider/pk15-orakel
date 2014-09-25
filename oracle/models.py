@@ -144,7 +144,7 @@ class QuestionConfig(models.Model):
         '''
         Configure other properties
         '''
-        ordering = ["team", "-question"]
+        ordering = ["team", "id", "-question"]
         unique_together = (
                             ('team', 'coordinate'),
                             ('team', 'question')
