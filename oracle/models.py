@@ -84,6 +84,7 @@ class Question(models.Model):
     '''
     A question
     '''
+
     question = models.TextField(verbose_name='Frage')
     '''
     Actual question
@@ -103,6 +104,11 @@ class Answer(models.Model):
     '''
     An answer to a question
     '''
+    class Meta:
+        '''
+        Configure other properties
+        '''
+        ordering = ["?", ]
 
     question = models.ForeignKey(Question, verbose_name='Frage')
     '''
