@@ -33,6 +33,9 @@ urlpatterns = patterns('',
     url(r'^user/login$',
         user.login,
         name='login'),
+    url(r'^user/logout$',
+        user.logout,
+        name='logout'),
 
     # Teams
     url(r'^team/(?P<pk>\d+)/list$',

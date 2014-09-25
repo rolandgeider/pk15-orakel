@@ -51,14 +51,16 @@
                 <a class="navbar-brand" href="{% url 'core:index' %}">PK15 Orakel</a>
             </div>
             <div class="collapse navbar-collapse">
-                {% if perms.question %}
+                
                 <ul class="nav navbar-nav">
+                    {% if perms.question %}
                     <li><a href="{% url 'oracle:question-config-list' %}">Teamfragen</a></li>
                     <li><a href="{% url 'oracle:coordinate-list' %}">Koordinaten</a></li>
                     <li><a href="{% url 'oracle:question-list' %}">Fragen</a></li>
                     <li><a href="{% url 'core:team-list' %}">Teams</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'core:logout' %}">Ausloggen</a></li>
                 </ul>
-                {% endif %}
             </div><!--/.nav-collapse -->
         </div>
     </div>
