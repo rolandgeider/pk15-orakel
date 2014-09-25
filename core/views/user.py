@@ -20,7 +20,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.views import login as django_loginview
-
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
 
 logger = logging.getLogger('wger.custom')
 
@@ -44,6 +45,22 @@ def login(request):
     if request.REQUEST.get('next'):
         context['next'] = request.REQUEST.get('next')
 
+    # Sane login, with POST
+    if request.method == "POST":
+        return django_loginview(request,
+                            template_name='user/login.html',
+                            extra_context=context)
+        
+    # log in with GET parameters so users can easily get in by scanning a QR code
+    elif request.REQUEST.get('get_login'):
+        
+        form = AuthenticationForm(request, data=request.GET)
+        if form.is_valid():
+
+            auth_login(request, form.get_user())
+            return HttpResponseRedirect(reverse('oracle:dashboard'))
+
+        
     return django_loginview(request,
                             template_name='user/login.html',
                             extra_context=context)
