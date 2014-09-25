@@ -84,7 +84,6 @@ class Question(models.Model):
     '''
     A question
     '''
-
     question = models.TextField(verbose_name='Frage')
     '''
     Actual question
@@ -111,7 +110,7 @@ class Answer(models.Model):
     '''
 
     answer = models.CharField(verbose_name='Antwort',
-                              max_length=30)
+                              max_length=50)
     '''
     Answer
     '''
