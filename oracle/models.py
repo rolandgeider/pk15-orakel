@@ -52,7 +52,7 @@ class Coordinate(models.Model):
         '''
         Configure other properties
         '''
-        ordering = ["description", ]
+        ordering = ["-is_jail", "description", ]
 
     description = models.CharField(verbose_name=u'Beschreibung',
                                    help_text=u'Wird nur im Admininterface verwendet',
