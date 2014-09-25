@@ -2,18 +2,31 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{% block title %} {% trans "Dashboard" %}{% endblock %}
+{% block title %}Hallo {{user}}!{% endblock %}
 
 {% block header %}
 {% endblock %}
 
 
 {% block content %}
-<p>Hallo {{user}}!</p>
+<p>Hier noch eine kurze Beschreibung? Oder die Spielregeln?</p>
+
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+{% if coordinate %}
+<div class="well">
+    <h3>{{ coordinate.lat }}</h3>
+    <h3>{{ coordinate.lon }}</h3>
+</div>
+{% endif %}
 {% endblock %}
 
 
 
 {% block sidebar %}
-<h4>Info</h4>
+<img src="{% static 'images/576px-Oktopus-Orakel_Paul.JPG' %}" class="img-responsive img-rounded">
+<small><a href="http://de.wikipedia.org/wiki/Paul_%28Krake%29" target="_blank">Ich weiss schon, wer gewinnt</a></small>
 {% endblock %}

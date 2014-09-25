@@ -19,19 +19,43 @@ from django import forms
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.forms import ModelForm, RadioSelect, Form, Textarea
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
+from django.forms import ModelForm
+from django.forms import RadioSelect
+from django.forms import Form
+from django.forms import Textarea
+from django.http import HttpResponseForbidden
+from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from oracle.models import Coordinate, QuestionConfig, AnswerConfig, Answer, TeamAnswerLog
+from oracle.models import Coordinate
+from oracle.models import QuestionConfig
+from oracle.models import AnswerConfig
+from oracle.models import Answer
+from oracle.models import TeamAnswerLog
 
 
 @login_required
 def dashboard(request):
     '''
-    Show the index page with the current active question
+    Show the index page
     '''
 
     context = {}
+
+    # If it's the first step, show the first coordinates
+    if not request.user.has_perm('oracle.add_question'):
+        team = request.user.userprofile.team
+
+        if not TeamAnswerLog.objects.filter(team=team).count():
+            coordinate = QuestionConfig.objects.filter(team=team).first().coordinate
+            context['coordinate'] = coordinate
+        #else:
+        #    last_log = TeamAnswerLog.objects.filter(team=team).last()
+        #    answer_config = AnswerConfig.objects.get(question_config=last_log.question_config,
+        #                                             answer=last_log.team_answer)
+        #    coordinate = answer_config.next_coordinate
+
+        #context['coordinate'] = coordinate
     return render(request, 'index.html', context)
 
 
