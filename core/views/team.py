@@ -47,14 +47,14 @@ class TeamDetailView(WgerPermissionMixin, DetailView):
         Send some additional data to the template
         '''
         answer_log = TeamAnswerLog.objects.filter(team=self.object)
-        first_log = answer_log.first()
+        time_from = self.object.userprofile_set.first().user.last_login
         last_log = answer_log.last()
         count = TeamAnswerLog.objects.filter(team=self.object, team_answer__is_wrong=True).count()
 
         context = super(TeamDetailView, self).get_context_data(**kwargs)
         context['answer_log'] = answer_log
         context['wrong_answers'] = count
-        context['time_diff'] = last_log.time - first_log.time
+        context['time_diff'] = time_from - last_log.time if last_log else '-/-'
 
         return context
 
