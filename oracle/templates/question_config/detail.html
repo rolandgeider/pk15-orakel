@@ -66,7 +66,6 @@
 {% if perms.oracle.add_question %}
 <h4>Optionen</h4>
 <p><a href="{% url 'oracle:question-config-delete' questionconfig.id %}">Löschen</a></p>
-<p><a href="{% url 'oracle:question-config-edit' questionconfig.id %}">Bearbeiten</a></p>
 
 {% endif %}
 {% endblock %}

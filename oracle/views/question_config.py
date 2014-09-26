@@ -78,26 +78,6 @@ class QuestionConfigAddView(WgerFormMixin, CreateView, WgerPermissionMixin):
         return super(QuestionConfigAddView, self).form_valid(form)
 
 
-class QuestionConfigUpdateView(WgerFormMixin, UpdateView, WgerPermissionMixin):
-    '''
-    View to update an existing team
-    '''
-
-    model = QuestionConfig
-    title = u'Team bearbeiten'
-    success_url = reverse_lazy('oracle:question-config-list')
-    permission_required = 'oracle.change_question'
-
-    def get_context_data(self, **kwargs):
-        '''
-        Send some additional data to the template
-        '''
-        context = super(QuestionConfigUpdateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('oracle:question-config-edit', kwargs={'pk': self.object.id})
-        context['title'] = u'Bearbeite {0}'.format(self.object)
-        return context
-
-
 class QuestionConfigDeleteView(WgerDeleteMixin, DeleteView, WgerPermissionMixin):
     '''
     View to delete an existing team
