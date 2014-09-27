@@ -1,0 +1,7 @@
+{% load wger_extras %}
+
+<div class="well">
+  <h2>Nächstes Ziel:</h2>
+  <H3>Lat: {{ lat | float | stringformat:".6f"}} <small>({{ lat | DMS }})</small></h3>
+  <h3>Lon: {{ lon | float | stringformat:".6f"}} <small>({{ lon | DMS }})</small></h3>
+</div>

@@ -30,6 +30,27 @@ def osm_coordinate(lat, lon):
     return {'lat': lat,
             'lon': lon}
 
+@register.inclusion_tag('tags/coordinate.html')
+def coordinate(lat, lon):
+    '''
+    Renders the coordinate
+    '''
+
+    return {'lat': lat,
+            'lon': lon}
+
+
+@register.filter(name='DMS')
+def DMS(coord):
+    coord = float(coord)
+    deg = int(coord)
+    min = int((coord - deg) * 60)
+    sec = ((coord - deg)*60 - min) * 60
+    return "%d° %d' %.2f''" % (deg, min, sec)
+
+@register.filter(name="float")
+def to_float(value):
+    return float(value)
 
 #
 # Form utils

@@ -48,7 +48,7 @@ def dashboard(request):
 
         if not TeamAnswerLog.objects.filter(team=team).count():
             coordinate = QuestionConfig.objects.filter(team=team).first().coordinate
-            context['coordinate'] = coordinate
+            context['coord'] = coordinate
         #else:
         #    last_log = TeamAnswerLog.objects.filter(team=team).last()
         #    answer_config = AnswerConfig.objects.get(question_config=last_log.question_config,
