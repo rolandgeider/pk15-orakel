@@ -16,6 +16,7 @@
 
 from django import template
 from django.forms.widgets import CheckboxInput, ClearableFileInput
+from django.forms import RadioSelect
 
 register = template.Library()
 
@@ -63,6 +64,10 @@ def is_fileupload(field):
     '''
     return field.field.widget.__class__.__name__ == ClearableFileInput().__class__.__name__
 
+@register.filter(name="is_radio")
+def is_radio(field):
+    return 'radio' in field.field.widget.__class__.__name__.lower()
+    return isinstance(field.field.widget, RadioSelect)
 
 @register.inclusion_tag('tags/render_form_element.html')
 def render_form_field(field):

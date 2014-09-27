@@ -13,7 +13,16 @@
         </label>
 
         <div class="col-md-9">
-            {% if not field|is_checkbox and not field|is_fileupload %}
+	    {% if field|is_radio %}
+	     {% for choice in field.field.queryset %}
+               <div class="radio">
+                  <label>
+                    <input type="radio" name="{{ field.name }}" value="{{ choice.id }}">
+		    {{ choice.answer }}
+		  </label>
+                </div>
+	      {% endfor %}
+            {% elif not field|is_checkbox and not field|is_fileupload %}
                 {{ field|form_field_add_css:'form-control' }}
             {% else %}
                 {{ field }}
