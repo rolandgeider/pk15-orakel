@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load wger_extras %}
 
 {% block title %}Hallo {{user}}!{% endblock %}
 
@@ -16,11 +17,8 @@ eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptu
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
 no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 
-{% if coordinate %}
-<div class="well">
-    <h3>{{ coordinate.lat }}</h3>
-    <h3>{{ coordinate.lon }}</h3>
-</div>
+{% if coord %}
+{% coordinate coord.lat coord.lon %}
 {% endif %}
 {% endblock %}
 
