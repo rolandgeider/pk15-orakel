@@ -109,7 +109,8 @@ def check_step(request, uuid):
 
     class AnswerLogForm(Form):
         answer = forms.ModelChoiceField(queryset=Answer.objects.filter(question=question_config.question),
-                                        empty_label=u"--- bitte wählen ---",
+                                        empty_label=None,
+                                        widget=forms.RadioSelect,
                                         label=u"Antwort")
 
         place = forms.CharField(label=u"Wo sind wir?",
