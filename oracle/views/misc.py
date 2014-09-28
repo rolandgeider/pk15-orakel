@@ -26,6 +26,7 @@ from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from oracle.helpers import next_coordinates
 
 from oracle.models import Coordinate
 from oracle.models import QuestionConfig
@@ -39,23 +40,9 @@ def dashboard(request):
     '''
     Show the index page
     '''
-
-    context = {}
-
-    # If it's the first step, show the first coordinates
-    if not request.user.has_perm('oracle.add_question'):
-        team = request.user.userprofile.team
-
-        if not TeamAnswerLog.objects.filter(team=team).count():
-            coordinate = QuestionConfig.objects.filter(team=team).first().coordinate
-            context['coord'] = coordinate
-        #else:
-        #    last_log = TeamAnswerLog.objects.filter(team=team).last()
-        #    answer_config = AnswerConfig.objects.get(question_config=last_log.question_config,
-        #                                             answer=last_log.team_answer)
-        #    coordinate = answer_config.next_coordinate
-
-        #context['coordinate'] = coordinate
+    next_coordinate = None if request.user.has_perm('oracle.add_question') \
+        else next_coordinates(request.user.userprofile.team)
+    context = {'coord': next_coordinate}
     return render(request, 'index.html', context)
 
 
@@ -151,19 +138,9 @@ def check_step(request, uuid):
             answer_log.reference = form.cleaned_data['reference']
             answer_log.save()
 
-            answer_config = AnswerConfig.objects.get(answer=form.cleaned_data['answer'],
-                                                     question_config=question_config)
-            next_coordinate = answer_config.next_coordinate
-
-            return HttpResponseRedirect(reverse('oracle:coordinate-show',
-                                                kwargs={'lat': next_coordinate.lat,
-                                                        'lon': next_coordinate.lon,
-                                                        'question': random.randrange(10)}))
+            return HttpResponseRedirect(reverse('oracle:dashboard'))
         else:
             pass
 
     context['form'] = form
-
-    #return HttpResponseRedirect(reverse('oracle:dashboard'))
-    #print question_config
     return render(request, 'check_step.html', context)
