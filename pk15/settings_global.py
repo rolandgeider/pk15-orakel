@@ -76,3 +76,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FROM = 'Your Name <your.email@example.com>'
+EMAIL_PENALTY = ['your.email@example.com',]

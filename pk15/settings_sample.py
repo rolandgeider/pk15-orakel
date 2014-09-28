@@ -38,3 +38,10 @@ DATABASES = {
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
+
+
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FROM = 'Your Name <your.email@example.com>'
+EMAIL_PENALTY = ['your.email@example.com',]

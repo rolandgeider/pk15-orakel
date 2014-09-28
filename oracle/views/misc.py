@@ -15,18 +15,18 @@
 # You should have received a copy of the GNU Affero General Public License
 import random
 
+from django.conf import settings
 from django import forms
-
 from django.contrib.auth.decorators import login_required
+from django.core import mail
 from django.core.urlresolvers import reverse
-from django.forms import ModelForm
-from django.forms import RadioSelect
 from django.forms import Form
 from django.forms import Textarea
 from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
+
 from oracle.models import Coordinate
 from oracle.models import QuestionConfig
 from oracle.models import AnswerConfig
@@ -85,7 +85,6 @@ def check_step(request, uuid):
                                                     'lon': next_coordinate.lon,
                                                     'question': 100}))
 
-
     if request.user.has_perm('oracle.add_question'):
         return HttpResponseForbidden('Sorry admin, only regular users can access this')
 
@@ -104,9 +103,10 @@ def check_step(request, uuid):
         pass
 
     # Is it the correct step?
+    pass
 
-
-
+    # Answer form, defined here because it's easier to set the queryset and
+    # is used only once anyway
     class AnswerLogForm(Form):
         answer = forms.ModelChoiceField(queryset=Answer.objects.filter(question=question_config.question),
                                         empty_label=None,
@@ -124,6 +124,25 @@ def check_step(request, uuid):
         form = AnswerLogForm(data=request.POST)
 
         if form.is_valid():
+
+            # Check if the team already answered this question and notify the
+            # santa task force that they have been naughty
+            if TeamAnswerLog.objects.filter(team=team, question_config=question_config).exists():
+
+                subject = 'Team {} hat geschummelt!'.format(team)
+                context = {'question_config': question_config,
+                           'team': team,
+                           'answer': form.cleaned_data['answer'],
+                           'place': form.cleaned_data['place'],
+                           'reference': form.cleaned_data['reference']}
+                message = render_to_string('user/email_double_answer.html', context)
+                mail.send_mail(subject,
+                               message,
+                               settings.EMAIL_FROM,
+                               settings.EMAIL_PENALTY,
+                               fail_silently=False)
+                return HttpResponseRedirect(reverse('oracle:dashboard'))
+
             answer_log = TeamAnswerLog()
             answer_log.team = team
             answer_log.question_config = question_config
