@@ -138,7 +138,11 @@ def check_step(request, uuid):
             answer_log.reference = form.cleaned_data['reference']
             answer_log.save()
 
-            return HttpResponseRedirect(reverse('oracle:dashboard'))
+            # If this is the last question, don't redirect to dashboard
+            if not next_coordinates(request.user.userprofile.team):
+                return HttpResponseRedirect(reverse('oracle:finish'))
+            else:
+                return HttpResponseRedirect(reverse('oracle:dashboard'))
         else:
             pass
 

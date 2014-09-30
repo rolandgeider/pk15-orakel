@@ -16,6 +16,7 @@
 
 
 from django.conf.urls import patterns, url
+from django.views.generic import TemplateView
 
 from oracle.views import question
 from oracle.views import question_config
@@ -31,11 +32,15 @@ urlpatterns = patterns('',
     url(r'^dashboard$',
         misc.dashboard,
         name='dashboard'),
+    
 
     # Coordinates
     url(r'^koordinate/(?P<uuid>[0-9a-f-]{1,36})$',
         misc.check_step,
         name='check-step'),
+    url(r'^koordinate/letzte$',
+        TemplateView.as_view(template_name='coordinate/finish.html'),
+        name='finish'),
     url(r'^koordinate/(?P<lat>[0-9.]{1,36})/(?P<lon>[0-9.]{1,36})/(?P<question>\d+)$',
         coordinate.show,
         name='coordinate-show'),
